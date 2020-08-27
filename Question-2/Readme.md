@@ -4,46 +4,12 @@ Ansible will call it with the argument --list when we run as example "ansible al
 
 Ansible expects a dictionary of groups (ie.,each group having a list of hosts and group variables in the group's vars dictionary) and a _meta dictionary stores host variables for all hosts individually (ie.,inside hostvars).
 
-
-Basic structure in shell script format :
-
-=========================================
-#! /bin/bash
-
-if [ "$1" == "--list" ]; then
-cat << EOF
-{
-  "bash_hosts": {
-    "hosts": [
-      "myhost.domain.com",
-      "localhost"
-    ],
-    "vars": {
-      "host_test": "test-value"
-    }
-  },
-  "_meta": {
-    "hostvars": {
-      "myhost.domain.com": {
-        "host_specific_test_var": "test-value"
-      }
-    }
-  }
-}
-EOF
-elif [ "$1" == "--host" ]; then
-  echo '{"_meta": {hostvars": {}}}'
-else
-  echo "{ }"
-
-==============================================
 Note:
-
 When we return a _meta dictionary in our inventory script, Ansible stores that data in its cache and doesn't call your inventory script N times for all the hosts in the inventory.
 
 We can also implement to fetch host variables per host with "--host [hostname]" arguments but it's often faster and easier to simply return al the variables in the first call.
 
-=============================================
+Implementation:
 
 In this scenario, I assumed there is a table in oracle db namely 'host_vars' with host_name,var_name,var_value as columns.
 
@@ -51,3 +17,4 @@ configuration/connection string values maintained in a separate module as config
 
 To connect with oracle db used 'cx_Oracle' module.
 
+To use this inventory, move the two .py files to ansible hosts directory and give executable permissions and run it like static inventory format (ansible all -i <inventory_file> -m ping).
