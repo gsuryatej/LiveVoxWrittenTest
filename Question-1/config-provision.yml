@@ -1,0 +1,30 @@
+---
+ - name: Playbook to deploy config file
+   hosts: db
+   var_files:
+     - "{{ env }}/group_vars/all.yml"
+     - "{{ env }}/group_vars/db.yml"
+     - "{{ env }}/group_vars/web.yml"
+   tasks:
+    - name: "clone the git repo"
+      git:
+       repo: 'https://github.com/gsuryatej/dummyrepo.git'
+       dest: /srv/checkout
+
+    - name: "copy file to /etc"
+      copy:
+       src: /srv/checkout/test.config
+       dest: /etc
+       remote_src: yes
+       owner: root
+       group: root
+       mode: '0644'
+       become: yes
+
+    - name: "Update databaseServer value dynamically based on env "
+      lineinfile:
+        dest: /srv/checkout/test.config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        - { regexp: '^databaseServer', line: 'databaseServer={{ hostvars['database']["hostname"] }}' }

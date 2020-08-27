@@ -1,0 +1,5 @@
+# Default variables for db and web groups can be defined here.
+---
+  ansible_user: "testuser"
+  ansible_ssh_pass: "testpass"
+  ansible_connection: "ssh"

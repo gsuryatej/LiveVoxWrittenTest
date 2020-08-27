@@ -1,0 +1,10 @@
+---
+hostname: mydatabase
+MAC: 52:54:00:D6:25:B7
+IP: 10.23.96.9
+virtual: true
+VM:
+  vcpus: 2
+  RAM: 2048 # in MiB
+  storage: 14 # in GiB; must be >= 12
+  pxe: true

@@ -1,0 +1,3 @@
+# group_vars/production
+---
+domain_name: myproddb.com

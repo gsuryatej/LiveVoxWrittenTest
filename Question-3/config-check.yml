@@ -1,0 +1,50 @@
+# Method 1
+---
+  - hosts: all
+    vars:
+    msg: |
+      No.of CPU: {{ ansible_processor_cores }}
+      RAM: {{ ansible_memtotal_mb }}
+      Disk Space: {{ ansible_memory_mb.swap.total }}
+      OS Installed: {{ ansible_os_family }} 
+    tasks:
+    - name: Hardware information of the hosts
+      debug:
+        msg: "{{ msg.split('\n') }}"
+
+    - name: check PATH env variable
+      debug:
+        msg: "{{ lookup('env','PATH') }} is an environment variable"
+
+# Method 2
+---
+ - host: all
+   tasks:
+    - set_fact:
+        no_of_cpus: {{ ansible_processor_cores }}
+    - set_fact:
+         ram_usage: {{ ansible_memtotal_mb }}
+    - set_fact:
+         disk_space: {{ ansible_memory_mb.swap.total }}
+    - set_fact:
+         os_family: {{ ansible_os_family }}
+    - debug:
+        msg:
+          - "No.of CPUs {{ no_of_cpus }}"
+          - "RAM (in MB) : {{ ram_usage }}"
+          - "Disk Space : {{ disk_space }}"
+          - "OS Family : {{ os_family }}"
+    - name: check PATH env variable
+      debug:
+        msg: "{{ lookup('env','PATH') }} is an environment variable"
+
+# We can validate the configuartion parameters with ansible "assert" module if predefined average usage is known or using some dummy statistics.
+---
+ - host: all
+   tasks:
+    - set_fact:
+         ram_usage: {{ ansible_memtotal_mb }}
+    - name: Validate the ram usage
+      assert:
+        that: ram_usage > 8024
+        msg: "'ram_usage' must be less than 8024 MB"
