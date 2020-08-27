@@ -28,34 +28,6 @@ export ENV before running the playbook and based on the env it will fetch the ho
 ansible-playbook -i "environment/$ENV" --extra-vars "env=$ENV" config-provision.yml
 
 
-To see this format structure properly use visual studio code
-
 The folder structure looks as below:
-.
-├── ansible.cfg
-├── environments/         # Parent directory for our environment-specific directories
-│   │
-│   ├── dev/              # Contains all files specific to the dev environment
-│   │   ├── group_vars/   # dev specific group_vars files
-│   │   │   ├── all
-│   │   │   ├── db
-│   │   │   └── web
-│   │   └── hosts         # Contains only the hosts in the dev environment
-│   │
-│   ├── prod/             # Contains all files specific to the prod environment
-│   │   ├── group_vars/   # prod specific group_vars files
-│   │   │   ├── all
-│   │   │   ├── db
-│   │   │   └── web
-│   │   └── hosts         # Contains only the hosts in the prod environment
-│   │
-│   └── stage/            # Contains all files specific to the stage environment
-│       ├── group_vars/   # stage specific group_vars files
-│       │   ├── all
-│       │   ├── db
-│       │   └── web
-│       └── hosts         # Contains only the hosts in the stage environment
-│
-├── playbook.yml
-│
-└── . . .
+
+![Multi-stageAnsibleSetup](https://user-images.githubusercontent.com/49281318/91426870-b3e4ec80-e87a-11ea-860d-7523b9536031.PNG)
