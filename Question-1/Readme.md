@@ -11,13 +11,13 @@ Sharing variable files across environments can be accomplished by using the ‘v
 
 Modules used to achieve are:
 
--> 'git' module to clone the repo
+1. 'git' module to clone the repo
 
--> 'copy' module to copy the configuration file to /etc with changing ownership and mode.
+2. 'copy' module to copy the configuration file to /etc with changing ownership and mode.
 
--> 'lineinfile' module to update the configuartion file with databaseServer based on the environment we deploy. However, we can also    use 'replace' module to achieve this task.
+3. 'lineinfile' module to update the configuartion file with databaseServer based on the environment we deploy. However, we can also    use 'replace' module to achieve this task.
 
--> To Update 'DataBaseServer' value in configuartion file dynamically we are using 
+4. To Update 'DataBaseServer' value in configuartion file dynamically we are using 
      {{ hostvars['database']["hostname"] }} -> this will fetch the hostname value of database host(This is mentioned in inventory file)
 
 Note: ansible.cfg is currently defaults to dev environment.
